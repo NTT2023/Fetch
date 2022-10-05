@@ -1,0 +1,21 @@
+<html>
+<head>
+	<title>DSL</title>
+        <meta charset="utf-8">
+<script type="text/javascript">
+function DSL(url) {
+var script = document.createElement('script');
+    script.setAttribute('type','text/javascript');
+    script.setAttribute('src',url);
+    document.body.appendChild(script);
+    document.body.removeChild(script);
+}
+</script>
+</head>
+<body>
+<h1> Dynamic Script Loading</h1>
+	<a href="javascript:DSL('dslJs.js');">Envoyer requête</a> : résultat dans la console.
+    <div id="bloc" style="background-color:yellow;"></div>
+</body>
+
+</html>

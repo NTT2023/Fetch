@@ -1,0 +1,41 @@
+<html>
+<head>
+	<title>Transfert de texte</title>
+    <meta charset="utf-8">
+<script>
+
+function envoyerRequete(url)
+{
+	fetch(url).then(function(response) {
+        if (response.ok) {
+            response.text().then(function(montexte) {
+                alert(montexte);
+            });
+        } else {//si pas de réseau
+            console.log('Mauvaise réponse du réseau');
+        }
+    }).catch(function(error) {
+        console.log('os fetch ' + error.message);
+    });
+}
+</script>
+</head>
+<body>
+	
+   <h1> Exemple 1 : Mise en œuvre du mécanisme (transfert de texte)</h1>
+   <br>
+<ul>
+<li>La première page (page1.html) contient la fonction envoyerRequete(url) et affiche un lien qui provoque l'exécution de la requête vers le serveur. 
+</li>
+<li>La seconde page (page2.html ou le fichier message.txt) ne contient que le mot "coucou". 
+</li><li>Lorsque l'utilisateur clique sur le lien de page1.html, la requête est envoyée au serveur par une fonction javascript, celui-ci se contente de retourner la page2 (ou le me fichier txt) et son contenu (mot "coucou") sur le flux http et la fonction affiche le résultat.</li>
+</ul>
+
+<a href="javascript:envoyerRequete('01_txt_coucou.html');">envoyer requete ajax (txt_coucou.html)</a><!--Lien relatif pas absolu !-->
+    <!--<a href="javascript:envoyerRequete('http://localhost/Exemples/Exemple01/txt_coucou.html');">envoyer requete ajax</a>-->
+<br>
+<br>
+<a href="javascript:envoyerRequete('01_message.txt');">envoyer requete ajax (message.txt)</a>
+
+</body>
+</html>

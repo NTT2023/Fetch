@@ -1,0 +1,39 @@
+<html>
+<head>
+	<title>Fetch et Json</title>
+        <meta charset="utf-8">
+<script type="text/javascript">
+function envoyerRequete(url)
+{
+
+fetch(url)
+.then(response => response.json())
+.then(response => traiterReponse(response))
+.catch(error => console.log("Erreur : " + error));
+}
+
+function traiterReponse(data)
+{
+            var items = data["items"];
+            for (var i = 0; i<items.length; i++)
+            {
+                var flickr_entry = items[i];
+                var urlmedia = flickr_entry.media.m;
+				var img=document.createElement("img");
+   				img.src=urlmedia;
+				var bloc = document.getElementById("bloc");
+				bloc.appendChild(img);
+            }
+  
+}
+
+</script>
+</head>
+<body>
+<h1> Chargement de JSON</h1>
+	<a href="javascript:envoyerRequete('04_json.json');">Envoyer requete ajax</a>
+    <!--en ligne : https://www.flickr.com/services/feeds/photos_public.gne?tags=starwars&format=json-->
+    <div id="bloc" style="background-color:yellow;"></div>
+</body>
+
+</html>

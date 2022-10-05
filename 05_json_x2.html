@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>Chargement de deux Json</title>
+<meta charset="utf-8">
+<script type="text/javascript">
+function envoyerRequete_00(url_1,url_2)
+{
+	Promise.all([fetch(url_1), fetch(url_2)])
+	.then(function (responses) {
+			return Promise.all([responses[0].json(),responses[1].json()])
+			}).then(function (data) {
+			console.log(data);
+			});
+}
+
+function envoyerRequete_01(url_1,url_2)
+{
+	Promise.all([fetch(url_1), fetch(url_2)])
+	.then(responses => Promise.all([responses[0].json(),responses[1].json()]))
+	.then(data => console.log(data))
+	.catch(function(error) {
+        console.log('os fetch ' + error.message);
+    });
+}
+
+function envoyerRequete_02(url_1,url_2)
+{
+	Promise.all([fetch(url_1), fetch(url_2)])
+	.then(function (responses) {
+			return Promise.all(responses.map(function (response) {
+				return response.json();
+			}));
+			}).then(function (data) {
+			console.log(data[0]);
+			});
+}
+
+
+function envoyerRequete_03(url_1,url_2)
+{
+	Promise.all([fetch(url_1), fetch(url_2)])
+	.then(([response1,response2]) => Promise.all([response1.json(),response2.json()]))
+	.then(([json1,json2]) => traiterReponse(json2))
+	.catch();
+}
+// function traiterReponse(data)
+// {
+//             var items = data["eBooks"];
+//             for (var i = 0; i<items.length; i++)
+//             {
+//                 var element = items[i];
+//                 var lang = element.language;
+// 				var edi = element.edition;
+//    				console.log('Item ' + i + ' : ' + lang + ' aux éditions ' + edi);
+//             }
+
+// }
+function traiterReponse(data)
+{
+	data["eBooks"].forEach((value,index) => console.log('Item ' + index + ' : ' + value.language + ' aux éditions ' + value.edition));
+}
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+<body>
+<h1> Exemple 15 : Chargement de JSON avec fetch()</h1>
+	<a href="javascript:envoyerRequete_00('json1.json','json2.json');">Envoyer requête</a><br>
+	<a href="javascript:envoyerRequete_02('json1.json','json2.json');">Envoyer requête</a><br>
+	<a href="javascript:envoyerRequete_01('json1.json','json2.json');">Envoyer requête</a><br>
+	<a href="javascript:envoyerRequete_03('json1.json','json2.json');">Envoyer requête</a><br>
+    <div id="bloc" style="background-color:yellow;"></div>
+</body>
+</html>

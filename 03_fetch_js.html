@@ -1,0 +1,32 @@
+<html>
+<head>
+	<title>Transfert de code Js</title>
+        <meta charset="utf-8">
+<script type="text/javascript">
+function envoyerRequete(url)
+{
+	fetch(url).then(function(response) {
+        if (response.ok) {
+            response.text().then(function(moncode) {
+                eval(moncode);
+            });
+        } else {//si pas de réseau
+            console.log('Mauvaise réponse du réseau');
+        }
+    }).catch(function(error) {
+        console.log('os fetch ' + error.message);
+    });
+}
+</script>
+</head>
+<body>
+<h1> Exemple 3 : transfert de code Js</h1>
+   <br>
+<ul>
+<li>On place du code Javascript dans la page page2.html,</li>
+<li>Dans la fonction de la page1.html execute le code avec la fonction "eval"</li>
+</ul>
+<br>
+	<a href="javascript:envoyerRequete('03_fetch_js');">Exécuter avec un lien</a>
+</body>
+</html>
