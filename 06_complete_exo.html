@@ -16,13 +16,13 @@
         </form>
 </body>
 <script>
-var search_terms = ['Louis',	'Mathieu',	'Jules',	'Melki',	'Quentin',	'Christopher',	'Guillaume'];
+var search_terms = ['Locqueneux',	'Demai',	'Davy',	'De Pindray',	'Guillemand',	'Baye',	'Lehouichi', 'Le Pape'];
 document.getElementById('q').addEventListener("keyup", function(event){autocompleteMatch(event)});
 
 function autocompleteMatch(event) {
   var input = event.target;//recuperation de l'element input
 	var saisie = input.value;//recuperation de la saisie
-  var min_characters = 1;// minimum de caractères
+  var min_characters = 1;// minimum de caractères de la saisie
   if (!isNaN(saisie) || saisie.length < min_characters ) { 
     return [];
   }
@@ -35,7 +35,7 @@ function traiterReponse(saisie)
   listeValeurs.innerHTML = "";//mise à blanc des options
   var reg = new RegExp(saisie);
   let terms = search_terms.filter(term => term.match(reg));//recup des termes qui match avec la saisie
-  	  for (i=0; i<terms.length; i++) {//création des otions
+  	  for (i=0; i<terms.length; i++) {//création des options
         var option = document.createElement('option');
                     option.value = terms[i];
                     listeValeurs.appendChild(option);
