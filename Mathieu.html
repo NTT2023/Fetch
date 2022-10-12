@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)file://gca-iti-port49/Vrac/06_complete_exo_mathieu.html -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch &amp; Autocomplétion</title>
+
+</head>
+<body>
+  <h1>Fetch &amp; Autocomplétion</h1>
+    <form autocomplete="off">
+      <input type="text" name="q" id="q" list="listeValeurs">
+      <datalist id="listeValeurs">
+      </datalist>
+        </form>
+
+<script>
+document.getElementById('q').addEventListener("keyup", function(event){autocompleteMatch(event)});
+
+function autocompleteMatch(event) {
+  var input = event.target;//recuperation de l'element input
+	var saisie = input.value;//recuperation de la saisie
+  var min_characters = 1;// minimum de caractères de la saisie
+  if (!isNaN(saisie) || saisie.length < min_characters ) { 
+    return [];
+  }
+  traiterReponse(saisie);
+}
+//setTimeout(() => {
+fetch('05_json1.json')
+.then(response => response.json())
+.then(response => { search_terms = response; console.log ("ok");})
+.catch(error => console.log("Erreur : " + error));
+//}, 3000)
+
+function traiterReponse(saisie)
+{
+	var listeValeurs = document.getElementById('listeValeurs');
+  listeValeurs.innerHTML = "";//mise à blanc des options
+  var reg = new RegExp(saisie, 'i');
+  let terms = search_terms.filter(term => term.match(reg));//recup des termes qui match avec la saisie
+  	  for (i=0; i<terms.length; i++) {//création des options
+        var option = document.createElement('option');
+                    option.value = terms[i];
+                    listeValeurs.appendChild(option);
+  }
+	  }
+
+</script>
+</body></html>

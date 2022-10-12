@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch & Autocomplétion</title>
+    
+</head>
+<body>
+  <h1>Fetch & Autocomplétion</h1>
+    <form autocomplete="off">
+      <input type="text" name="q" id="q" list="listeValeurs" />
+      <datalist id="listeValeurs">
+      </datalist>
+        </form>
+</body>
+<script>
+document.getElementById('q').addEventListener("keyup", function(event){autocompleteMatch(event)});
+
+function autocompleteMatch(event) {
+  var input = event.target;//recuperation de l''element input
+	var saisie = input.value;
+  var min_characters = 1;// minimum de caractères
+  if (!isNaN(saisie) || saisie.length < min_characters ) { 
+    return [];
+  }
+  fetch('05_json1.json')//fetch
+.then(response => response.json())
+.then(response => traiterReponse(response, saisie))
+.catch(error => console.log("Erreur : " + error));
+}
+
+function traiterReponse(data,saisie)
+{
+	var listeValeurs = document.getElementById('listeValeurs');
+  listeValeurs.innerHTML = "";
+  var reg = new RegExp(saisie,"i");//optioin i insensible à la casse
+  let terms = data.filter(term => term.match(reg));
+  	  for (i=0; i<terms.length; i++) {
+        var option = document.createElement('option');
+                    option.value = terms[i];
+                    listeValeurs.appendChild(option);
+  }
+	  }
+</script>
+</html>
