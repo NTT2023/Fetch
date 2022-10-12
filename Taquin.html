@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)file:///C:/Users/Greta/Downloads/bonni.html -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taquin</title>
+<style>
+*{
+  /*indispensable pour la compatibilité entre navigateur*/
+box-sizing: border-box;
+}
+p {
+text-align: right;
+}
+div#jeu {
+    margin: 0 auto;
+    /*width: 416px;*/
+	display:flex;
+	flex-wrap: wrap;
+	width: 90%;
+}
+button.case, button.vide {
+    /*width: 100px;
+    height: 100px;*/
+    font-size: 200%;
+    /*float:left;*/
+    border: solid 1pt black;
+    /*margin: 1px 2px 1px 2px;*/
+	/*case par 4 donc 25% + RATIO pour resté carré*/
+	flex : 1 0 33%;
+	aspect-ratio: 1 / 1;
+}
+button.vide {
+  background-color: inherit;
+  /*border: none;*/
+}
+/*hr {
+  clear: both;
+  visibility: hidden;
+  margin: 0;
+  padding: 0;
+}*/
+
+*{margin: 0;}
+    body{display: grid;grid-auto-rows: minmax(100px, auto); grid-template-areas: "header header header header" "nav container container cote" "nav container container cote" "nav container container cote" "footer footer footer footer";}
+    header{grid-area: header; text-align: center;}
+    h1{color: rgb(0, 0, 0);}    
+    nav{grid-area: nav;}
+    #cote{grid-area: cote;}
+    .container{grid-area: container; justify-content: center; text-align: center; display: grid; grid-template-columns: repeat(4, 120px); grid-template-rows: repeat(4, 120px); grid-gap: 5px;}
+    footer{grid-area: footer;}
+    .case, .vide {width: auto; height: auto; background-color: rgb(245, 242, 204);  border-radius: 5px;  color: rgb(53, 134, 60);}
+</style>
+<script>
+/* on mémorise l'emplacement de la case vide */
+var elig = 3;
+var ecol = 3;
+/* Fonction qui échange la case (lig,col) avec la case vide */
+function move (lig,col) {
+//verification des cases qui doivent être clicable
+if
+(
+	(
+	(lig==elig)||(col==ecol)
+	)
+	&&
+	(
+	(lig==(elig+1) || lig==(elig-1))||(col==(ecol+1) || col==(ecol-1))
+	)
+)
+{
+  /* on récupère les identifiants des deux boutons concernés */
+  var bname  = 'case'+lig+col;
+  var ename  = 'case'+elig+ecol;
+  /* on récupère les noeuds correspondant à ces boutons */
+  var bnode  = document.getElementById(bname);
+  var enode  = document.getElementById(ename);
+  /* on récupère les fils textuels des deux boutons */
+  var bvalue = bnode.removeChild(bnode.childNodes[0]);
+  var evalue = enode.removeChild(enode.childNodes[0]);
+  /* on échange ces fils */
+  bnode.appendChild(evalue);
+  enode.appendChild(bvalue);
+  /* on échange les classes des deux boutons */
+  bnode.setAttribute('class','vide');
+  enode.setAttribute('class','case');
+  /* on enlève le "focus" sur le bouton cliqué */
+  bnode.blur();
+  /* on mémorise l'emplacement de la case vide */
+  elig   = lig;
+  ecol   = col;
+  }
+}
+</script>
+</head>
+<body>
+<h1>Petit taquin...</h1>
+<p>
+</p><ol>
+<ul>
+  Ce code JS est à finir : la régle stipule que l'on ne peut déplacer un numéro que lorsque qu'il est adjacent à la case vide. A corriger...
+</ul>
+<ul>
+  En second lieu utiliser le module Flex ou grid pour la constitution de la grille et des cases.
+</ul>
+</ol>
+<p></p>
+<hr>
+<div id="jeu">
+<button id="case11" class="case" onclick="move(1,1);">1</button>
+<button id="case12" class="case" onclick="move(1,2);">2</button>
+<button id="case13" class="case" onclick="move(1,3);">8</button>
+
+
+<button id="case21" class="case" onclick="move(2,1);">7</button>
+<button id="case22" class="vide" onclick="move(2,2);">&nbsp;</button>
+<button id="case23" class="case" onclick="move(2,3);">3</button>
+
+
+<button id="case31" class="case" onclick="move(3,1);">5</button>
+<button id="case32" class="case" onclick="move(3,2);">6</button>
+<button id="case33" class="case" onclick="move(3,3);">4</button>
+
+
+
+<hr>
+</div>
+
+</body></html>
